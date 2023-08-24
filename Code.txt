@@ -1,0 +1,32 @@
+#include <Arduino.h>
+static const int led_pin=14;
+static const int ir_pin=5;
+static const int buzzer_pin = 4;
+bool ir;
+void setup()
+{
+  Serial.begin(9600);
+  while(!Serial);
+  pinMode(led_pin,OUTPUT);
+  pinMode(ir_pin,INPUT);
+  pinMode(buzzer_pin , OUTPUT);
+}
+void loop()
+{
+  ir=digitalRead(ir_pin);
+  if(ir==0)
+  {
+    digitalWrite(led_pin,HIGH);
+    Serial.println("Presence detected");
+    //digitalWrite(buzzer_pin,HIGH);
+    tone(buzzer_pin,2300,500);
+    delay(200);
+  }
+  else if(ir==1)
+  {
+    digitalWrite(led_pin,LOW);
+    //digitalWrite(buzzer_pin,LOW);
+    noTone(buzzer_pin);
+    
+  }
+}
